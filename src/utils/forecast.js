@@ -1,7 +1,7 @@
 const request = require('request')
 
 const forecast = (latitude, longitude, callback) => {
-    const url = `https://api.darksky.net/forecast/7e6b40c62aeb1bf6165b7d00382c8602/${latitude},${longitude}?units=si`
+    const url = `http://api.weatherstack.com/current?access_key=8fee8b94453cf54344902750baa7f6eb&query=${latitude},${longitude}&units=m&`
     
     request({url, json: true}, (error, { body }) => {
         if (error) {
@@ -9,7 +9,7 @@ const forecast = (latitude, longitude, callback) => {
         } else if (body.error) {
             callback('Unable to find location.', undefined)
         } else {
-            callback(undefined, `${body.daily.data[0].summary} It is currently ${body.currently.temperature} degrees out. There is a ${body.currently.precipProbability}% chance of rain.`)
+            callback(undefined, `${body.current.weather_descriptions[0]}. It is currently ${body.current.temperature} degrees out. It feels like ${body.current.feelsLike} degrees out. The humidity is ${body.current.humidity}%.`)
                 }
     })
 }
